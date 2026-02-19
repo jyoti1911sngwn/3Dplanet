@@ -4,7 +4,6 @@ import earthVertex from "@/components/3D/shaders/earth/vertex.glsl";
 import earthFragment from "@/components/3D/shaders/earth/fragment.glsl";
 import atmosphereVertex from "@/components/3D/shaders/atmosphere/vertex.glsl";
 import atmosphereFragment from "@/components/3D/shaders/atmosphere/fragment.glsl";
-import { Scroll } from "@react-three/drei";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 const initPlanet3D = (): {
