@@ -1,95 +1,36 @@
+"use client";
 import Image from "next/image";
-import styles from "./page.module.css";
-
+import styles from "@/styles/main.module.scss";
+import { useEffect } from "react";
+import initPlanet3D from "@/components/3D/planet";
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const { scene, renderer } = initPlanet3D();
+    return () => {
+      if(renderer){
+        const gl = renderer.getContext();
+        gl.getExtension("WEBGL_lose_context")?.loseContext();
+        renderer.dispose();
+      }
+    }
+  }, []);
+
+  return (
+    <div className="page">
+      <section className="hero_main">
+
+        <div className="content">
+          <h1> Welcome to 3D Planet!
+            </h1>
+            <p>
+              Explore the wonders of our solar system in stunning 3D. Discover the planets, moons, and other celestial bodies that make up our cosmic neighborhood. With interactive models and detailed information, you can learn about the unique features and characteristics of each planet. Whether you're a student, educator, or simply a space enthusiast, 3D Planet offers an immersive experience to deepen your understanding of our universe. Start your journey through space today!
+            </p>
+            <button className="cta_btn">Explore Now</button>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <canvas className="planet-3D" />
+      </section>
     </div>
   );
 }
